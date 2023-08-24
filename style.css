@@ -1,0 +1,83 @@
+#fondoimg {
+    position: relative;
+    background-image: url(./media/fonfofondo1.jpg);
+    height: 100vh;
+}
+
+h1 {
+    font-size: 60px;
+    color: #2e1f27;
+    font-family: "Lobster", cursive;
+    -webkit-text-stroke: 1.5px #f4c95d;
+}
+
+h2 {
+    font-size: 30px;
+    color: #2e1f27;
+    font-family: "Lobster", cursive;
+    margin-top: 30px;
+    -webkit-text-stroke: 0.7px #f4c95d;
+}
+
+span {
+    color: #f4c95d;
+    -webkit-text-stroke: 1.5px #2e1f27;
+}
+
+div.box {
+    font-weight: bolder;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    border-top: 5px solid #2e1f27;
+    background-color: #EADA6F;
+    overflow: auto;
+}
+
+div.box h3 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+img {
+    height: 300px;
+    width: 300px;
+}
+
+#card {
+    width: auto;
+    margin: auto;
+    justify-content: center;
+}
+
+.card {
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    gap: 10px;
+    width: 18rem;
+}
+
+.card-img -top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-title { font-weight: bold;}
+
+.card-prize {font-size: 25px;}
+
+.card:hover {
+    transform: scale(1.05);
+    background: #2e1f27;
+    background: linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%);
+}
+
+#calcular {
+    font-weight: bolder;
+    border-radius: 30px;
+    font-size: 35px;
+    margin-top: 15px;
+    margin-bottom: 25px;   
+}
