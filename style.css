@@ -74,7 +74,7 @@ img {
     background: linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%);
 }
 
-#calcular {
+#boton {
     font-weight: bolder;
     border-radius: 30px;
     font-size: 35px;
