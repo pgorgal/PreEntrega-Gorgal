@@ -1,6 +1,6 @@
 // Reraso
 
-setTimeout(principal(), 2000)
+setTimeout(principal(), 3000)
 
 // Productos
 
