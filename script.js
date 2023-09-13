@@ -1,3 +1,7 @@
+// Reraso
+
+setTimeout(principal, 2000)
+
 // Productos
 
 let etiquetas = [
@@ -9,7 +13,7 @@ let etiquetas = [
     { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000 },
 ]
 
-// Simulador Carrito v.2.3
+// Simulador Carrito v.2.4
 
 principal(etiquetas)
 
