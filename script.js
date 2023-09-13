@@ -9,7 +9,7 @@ let etiquetas = [
     { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000 },
 ]
 
-// Simulador Carrito v.1.0
+// Simulador Carrito v.2.3
 
 principal(etiquetas)
 
@@ -18,7 +18,7 @@ function principal(etiquetas) {
 
     let opcion
     do {
-        opcion = Number(prompt("Ingrese opción:\n1 - Listar productos\n2 - Ver información de un producto\n3 - Filtrar por material\n4 - Ordenar por nombre a-z\n5 - Ordenar por nombre z-a\n6 - Ordenar por precio a-z\n7 - Ordenar por precio z-a\n8 - Agregar producto al carrito\n9 - Finalizar compra\n0 - para salir"))
+        opcion = Number(prompt("Ingresar opción:\n1 - Listar productos\n2 - Ver información de un producto\n3 - Filtrar por material\n4 - Ordenar por nombre a-z\n5 - Ordenar por nombre z-a\n6 - Ordenar por precio a-z\n7 - Ordenar por precio z-a\n8 - Agregar producto al carrito\n9 - Finalizar compra\n10 - Crear etiqueta\n11 - Borrar etiqueta\n0 - para salir"))
         switch (opcion) {
             case 1:
                 alert(listar(etiquetas))
@@ -51,6 +51,12 @@ function principal(etiquetas) {
             case 9:
                 finalizarCompra(carrito)
                 carrito = []
+                break
+            case 10:
+                crear()
+                break
+            case 11:
+                borrar()
                 break
             default:
                 break
