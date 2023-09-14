@@ -1,17 +1,42 @@
-// Reraso
+// Retraso
 
-setTimeout(principal(), 2000)
+setTimeout(principal, 2000)
 
 // Productos
 
 let etiquetas = [
-    { id: 1, nombre: "Plato chico", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x25", signo: "$", precio: 3000 },
-    { id: 2, nombre: "Plato grande", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x35", signo: "$", precio: 4000 },
-    { id: 3, nombre: "Tabla de asado", descripcion: "Tabla de asado", material: "Guayubira", medidas: "35x50", signo: "$", precio: 5000 },
-    { id: 4, nombre: "Tabla pizzera", descripcion: "Tabla para pizza", material: "Guayubira", medidas: "37", signo: "$", precio: 5000 },
-    { id: 5, nombre: "Plato chico", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x25", signo: "$", precio: 4000 },
-    { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000 },
+    { id: 1, nombre: "Plato chico", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x25", signo: "$", precio: 3000, img: "plato" },
+    { id: 2, nombre: "Plato grande", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x35", signo: "$", precio: 4000, img: "platogrande" },
+    { id: 3, nombre: "Tabla de asado", descripcion: "Tabla de asado", material: "Guayubira", medidas: "35x50", signo: "$", precio: 5000, img: "guayularga" },
+    { id: 4, nombre: "Tabla pizzera", descripcion: "Tabla para pizza", material: "Guayubira", medidas: "37", signo: "$", precio: 5000, img: "pizzera" },
+    { id: 5, nombre: "Plato chico", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x25", signo: "$", precio: 4000, img: "petiribi2" },
+    { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000, img: "petiribi1" },
 ]
+
+// Autoquetas
+
+autoquetas(etiquetas)
+
+function autoquetas(productos) {
+    let contenedor = document.getElementById("card")
+
+    productos.forEach(producto => {
+        let tarjeta = document.createElement("div")
+        tarjeta.className = "card"
+
+        tarjeta.innerHTML = `
+        <img src=./media/tablas/${producto.img}.jpeg class="card-img-top"
+            alt=${producto.descripcion}>
+            <div class="card-body">
+                <h4 class="card-title">${producto.nombre}</h4>
+                <p class="card-text">Medidas ${producto.medidas}cm</p>
+                <p class="card-prize">$${producto.precio} </p>
+                <a href="#nombre" class="btn btn-primary">Código ${producto.id}</a>
+            </div>
+        `
+        contenedor.appendChild(tarjeta)
+    })
+}
 
 // Simulador Carrito v.2.4
 
@@ -163,30 +188,32 @@ function finalizarCompra(carrito) {
 
 function crear() {
 
-    function Etiqueta(id, nombre, descripcion, material, medidas, signo, precio) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.material = material;
-        this.medidas = medidas;
-        this.signo = signo;
-        this.precio = parseInt(precio);
-        this.valor = this.signo + this.precio;
+    function Etiqueta(id, nombre, descripcion, material, medidas, signo, precio, img) {
+        this.id = id
+        this.nombre = nombre
+        this.descripcion = descripcion
+        this.material = material
+        this.medidas = medidas
+        this.signo = signo
+        this.precio = parseInt(precio)
+        this.valor = this.signo + this.precio
+        this.img = img
     }
 
-    let cantidad = Number(prompt("Cantidad"));
+    let cantidad = Number(prompt("Cantidad"))
 
     for (let i = 0; i < cantidad; i++) {
-        let id = etiquetas.length + 1;
-        let nombre = prompt("Ingresar nombre");
-        let descripcion = prompt("Ingresar descripción");
-        let material = prompt("Ingresar material");
-        let medidas = prompt("Ingresar medidas");
-        let signo = "$";
-        let precio = prompt("Ingresar precio");
+        let id = etiquetas.length + 1
+        let nombre = prompt("Ingresar nombre")
+        let descripcion = prompt("Ingresar descripción")
+        let material = prompt("Ingresar material")
+        let medidas = prompt("Ingresar medidas")
+        let signo = "$"
+        let precio = prompt("Ingresar precio")
+        let img = prompt("Ingresar nombre de imagen")
 
-        let etiqueta = new Etiqueta(id, nombre, descripcion, material, medidas, signo, precio);
-        etiquetas.push(etiqueta);
+        let etiqueta = new Etiqueta(id, nombre, descripcion, material, medidas, signo, precio, img)
+        etiquetas.push(etiqueta)
     }
 }
 
@@ -199,14 +226,14 @@ function borrar() {
 
         if (indice !== -1) {
             etiquetas.splice(indice, 1);
-            console.log(`Etiqueta con nombre "${nombre}" eliminado correctamente.`);
+            console.log(`Etiqueta con nombre "${nombre}" eliminado correctamente.`)
         } else {
-            console.log(`No se encontró ninguna etiqueta con nombre "${nombre}".`);
+            console.log(`No se encontró ninguna etiqueta con nombre "${nombre}".`)
         }
     }
 
-    let nombreAEliminar = prompt("Etiqueta a eliminar");
-    eliminarEtiqueta(nombreAEliminar);
+    let nombreAEliminar = prompt("Etiqueta a eliminar")
+    eliminarEtiqueta(nombreAEliminar)
 }
 
 // Ver etiquetas
@@ -218,3 +245,4 @@ etiquetas.forEach((item) => {
     console.log("Medidas: " + item.medidas + "cm")
     console.log("Precio: $" + item.precio)
 })
+
