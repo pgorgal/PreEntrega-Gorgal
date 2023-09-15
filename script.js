@@ -245,4 +245,3 @@ etiquetas.forEach((item) => {
     console.log("Medidas: " + item.medidas + "cm")
     console.log("Precio: $" + item.precio)
 })
-
