@@ -81,3 +81,10 @@ img {
     margin-top: 15px;
     margin-bottom: 25px;   
 }
+
+#buscador {
+    width: 250px;
+    border: solid 2px black;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

@@ -1,7 +1,3 @@
-// Retraso
-
-setTimeout(principal, 2000)
-
 // Productos
 
 let etiquetas = [
@@ -13,14 +9,17 @@ let etiquetas = [
     { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000, img: "petiribi1" },
 ]
 
+let carrito = []
+
 // Autoquetas
 
-autoquetas(etiquetas)
+autoquetas(etiquetas, carrito)
 
-function autoquetas(productos) {
+function autoquetas(etiquetas, carrito) {
     let contenedor = document.getElementById("card")
+    contenedor.innerHTML = ""
 
-    productos.forEach(producto => {
+    etiquetas.forEach(producto => {
         let tarjeta = document.createElement("div")
         tarjeta.className = "card"
 
@@ -31,16 +30,20 @@ function autoquetas(productos) {
                 <h4 class="card-title">${producto.nombre}</h4>
                 <p class="card-text">Medidas ${producto.medidas}cm</p>
                 <p class="card-prize">$${producto.precio} </p>
-                <a href="#nombre" class="btn btn-primary">Código ${producto.id}</a>
+                <a href="#nombre" class="btn btn-primary" id=${producto.id}>Agregar al carrito</a>
             </div>
         `
         contenedor.appendChild(tarjeta)
+
+        let botonAgregrarCarrito = document.getElementById(producto.id)
+        botonAgregrarCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
     })
 }
 
+
 // Simulador Carrito v.2.4
 
-principal(etiquetas)
+/* principal(etiquetas)
 
 function principal(etiquetas) {
     let carrito = []
@@ -92,7 +95,7 @@ function principal(etiquetas) {
         }
     } while (opcion != 0)
 }
-
+ */
 function listar(productos) {
     return productos.map(producto => producto.id + " - " + producto.nombre + " - Material: " + producto.material + " - $" + producto.precio).join("\n")
 }
@@ -101,22 +104,29 @@ function descripcion(productos) {
     return productos.map(producto => producto.id + " - " + producto.nombre + "\n" + producto.descripcion + "\n" + "Material: " + producto.material + "\n" + "Medidas: " + producto.medidas + "cm\n" + "Precio: $" + producto.precio).join("\n")
 }
 
-function buscarProducto(productos, carrito) {
+//Buscar productos por nombre
+
+let buscador = document.getElementById("buscador")
+let botonBuscar = document.getElementById("buscar")
+
+botonBuscar.addEventListener("click", () => buscarProducto(etiquetas))
+
+function buscarProducto(etiquetas) {
     let productoElegido = false
 
     do {
-        let nombreProducto = Number(prompt("Ingresá el ID del producto"))
-        let productoBuscado = productos.find(etiqueta => etiqueta.id === nombreProducto)
-
+        let textoBusqueda = buscador.value.trim().toLowerCase()
+        let productoBuscado = etiquetas.filter(producto => producto.nombre.toLowerCase().includes(textoBusqueda))
         if (productoBuscado) {
-            alert(descripcion([productoBuscado]))
+            autoquetas(productoBuscado)
             productoElegido = true
         } else {
             alert("Producto incorrecto o inexistente")
-            alert("Productos disponibles:\n" + listar(productos))
         }
     } while (!productoElegido)
 }
+
+// Buscar por Material
 
 function buscarPorMaterial(productos) {
     let materialElegido = false
@@ -140,38 +150,47 @@ function listarMaterialesUnicos(productos) {
     return materialesUnicos.join("\n")
 }
 
-function agregarProductoAlCarrito(productos, carrito) {
-    let continuarAgregando = true
+// Agregar al carrito
 
-    while (continuarAgregando) {
-        let id = Number(prompt("Seleccione producto por id:\n" + listar(productos)))
-        let cantidad = parseInt(prompt("¿Cuántos querés comprar?"))
-        let productoBuscado = productos.find(producto => producto.id === id)
+function agregarProductoAlCarrito(etiquetas, carrito, e) {
+    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
+    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
 
-        if (productoBuscado) {
-            let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
-
-            if (productoBuscado) {
-                if (productoEnCarrito) {
-                    productoEnCarrito.unidades += cantidad
-                    productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
-                } else {
-                    carrito.push({
-                        id: productoBuscado.id,
-                        nombre: productoBuscado.nombre,
-                        precioUnitario: productoBuscado.precio,
-                        unidades: cantidad,
-                        subtotal: productoBuscado.precio * cantidad
-                    })
-                }
-                alert("Se agregó producto al carrito")
-            }
+    if (productoBuscado) {
+        if (productoEnCarrito) {
+            productoEnCarrito.unidades++
+            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
         } else {
-            alert("Seleccione un producto válido")
+            carrito.push({
+                id: productoBuscado.id,
+                nombre: productoBuscado.nombre,
+                precioUnitario: productoBuscado.precio,
+                unidades: 1,
+                subtotal: productoBuscado.precio
+            })
         }
-        let respuesta = prompt("¿Desea agregar más productos al carrito? (Sí/No)").toLowerCase();
-        continuarAgregando = respuesta === "si" || respuesta === "sí";
+        alert("Se agregó producto al carrito")
     }
+    mostrarCarrito(carrito)
+}
+
+function mostrarCarrito(productosCarrito) {
+    let statusCarrito = document.getElementById("carrito")
+    statusCarrito.innerHTML = ""
+
+    productosCarrito.forEach(producto => {
+        let tarjetaCarrito = document.createElement("div")
+        tarjetaCarrito.className = "carrito"
+        tarjetaCarrito.innerHTML = `
+            <div class="card-body">
+            <h4 class="carrito-title">${producto.nombre}</h4>
+            <p class="carrito-prize">$${producto.precio} </p>
+            <p class="carrito-prize">Cantidad :${producto.unidades} </p>
+            <p class="carrito-prize">Subtotal :$${producto.subtotal} </p>
+        </div>
+    `
+        statusCarrito.appendChild(tarjetaCarrito)
+    })
 }
 
 function finalizarCompra(carrito) {
@@ -238,10 +257,10 @@ function borrar() {
 
 // Ver etiquetas
 
-etiquetas.forEach((item) => {
+/* etiquetas.forEach((item) => {
     console.log(item.id)
     console.log(item.nombre)
     console.log("Confeccionado en " + item.material)
     console.log("Medidas: " + item.medidas + "cm")
     console.log("Precio: $" + item.precio)
-})
+}) */
