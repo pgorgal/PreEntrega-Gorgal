@@ -40,7 +40,6 @@ function autoquetas(etiquetas, carrito) {
     })
 }
 
-
 // Simulador Carrito v.2.4
 
 /* principal(etiquetas)
@@ -113,17 +112,17 @@ botonBuscar.addEventListener("click", () => buscarProducto(etiquetas))
 
 function buscarProducto(etiquetas) {
     let productoElegido = false
+    let textoBusqueda = buscador.value.trim().toLowerCase()
 
-    do {
-        let textoBusqueda = buscador.value.trim().toLowerCase()
-        let productoBuscado = etiquetas.filter(producto => producto.nombre.toLowerCase().includes(textoBusqueda))
-        if (productoBuscado) {
-            autoquetas(productoBuscado)
-            productoElegido = true
-        } else {
-            alert("Producto incorrecto o inexistente")
-        }
-    } while (!productoElegido)
+    let productoBuscado = etiquetas.filter(producto => producto.nombre.toLowerCase().includes(textoBusqueda))
+
+    if (productoBuscado.length > 0) {
+        autoquetas(productoBuscado)
+        productoElegido = true
+    } else {
+        alert("Producto incorrecto o inexistente")
+        autoquetas(etiquetas, carrito)
+    }
 }
 
 // Buscar por Material
@@ -171,9 +170,19 @@ function agregarProductoAlCarrito(etiquetas, carrito, e) {
         }
         alert("Se agregó producto al carrito")
     }
-    mostrarCarrito(carrito)
+    //mostrarCarrito(carrito)
+    itemsCarrito(carrito)
 }
 
+function itemsCarrito(productosCarrito) {
+    let contadorCarrito = document.getElementById("contador-carrito")
+    contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
+}
+
+/* let carro = document.getElementById("carrito")
+
+carro.addEventListener("", () => mostrarCarrito(carrito))
+ */
 function mostrarCarrito(productosCarrito) {
     let statusCarrito = document.getElementById("carrito")
     statusCarrito.innerHTML = ""
@@ -254,13 +263,3 @@ function borrar() {
     let nombreAEliminar = prompt("Etiqueta a eliminar")
     eliminarEtiqueta(nombreAEliminar)
 }
-
-// Ver etiquetas
-
-/* etiquetas.forEach((item) => {
-    console.log(item.id)
-    console.log(item.nombre)
-    console.log("Confeccionado en " + item.material)
-    console.log("Medidas: " + item.medidas + "cm")
-    console.log("Precio: $" + item.precio)
-}) */

@@ -40,8 +40,8 @@ div.box h3 {
 }
 
 img {
-    height: 300px;
-    width: 300px;
+    height: 200px;
+    width: 200px;
 }
 
 #card {
@@ -55,7 +55,7 @@ img {
     margin-left: 10px;
     margin-right: 10px;
     gap: 10px;
-    width: 18rem;
+    width: 15rem;
 }
 
 .card-img -top {
@@ -64,9 +64,13 @@ img {
     object-fit: cover;
 }
 
-.card-title { font-weight: bold;}
+.card-title {
+    font-weight: bold;
+}
 
-.card-prize {font-size: 25px;}
+.card-prize {
+    font-size: 25px;
+}
 
 .card:hover {
     transform: scale(1.05);
@@ -79,12 +83,45 @@ img {
     border-radius: 30px;
     font-size: 35px;
     margin-top: 15px;
-    margin-bottom: 25px;   
+    margin-bottom: 25px;
 }
 
 #buscador {
+    display: inline;
+    position: absolute;
     width: 250px;
+    height: 33px;
     border: solid 2px black;
     margin-left: 10px;
     margin-bottom: 10px;
+    align-items: center;
+}
+
+#buscar {
+    display: inline;
+    position: relative;
+    background-image: url(./media/search.png);
+    background-size: cover;
+    width: 33px;
+    height: 33px;
+    align-items: center;
+    margin-left: 265px;
+}
+
+.imagencarro {
+    position: relative;
+    background-image: url(./media/carro.png);
+    background-size: cover;
+    border: 2px solid black;
+    box-sizing: border-box;
+    width: 33px;
+    height: 33px;
+        margin-bottom: 10px;
+    display: inline;
+}
+
+.contador {
+    position: relative;
+    font-size: 25px;
+    display: inline;
 }
