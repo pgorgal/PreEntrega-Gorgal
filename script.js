@@ -11,6 +11,18 @@ let etiquetas = [
 
 let carrito = []
 
+let carritoRecuperado = localStorage.getItem("carrito")
+if (carritoRecuperado) {
+    carrito = JSON.parse(carritoRecuperado)
+}
+
+// Contador carrito
+
+function itemsCarrito(productosCarrito) {
+    let contadorCarrito = document.getElementById("contador-carrito")
+    contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
+}
+
 // Autoquetas
 
 autoquetas(etiquetas, carrito)
@@ -22,7 +34,6 @@ function autoquetas(etiquetas, carrito) {
     etiquetas.forEach(producto => {
         let tarjeta = document.createElement("div")
         tarjeta.className = "card"
-
         tarjeta.innerHTML = `
         <img src=./media/tablas/${producto.img}.jpeg class="card-img-top"
             alt=${producto.descripcion}>
@@ -30,6 +41,15 @@ function autoquetas(etiquetas, carrito) {
                 <h4 class="card-title">${producto.nombre}</h4>
                 <p class="card-text">Medidas ${producto.medidas}cm</p>
                 <p class="card-prize">$${producto.precio} </p>
+                <div class="cantidades">
+                <span>
+                <button class="btn btn-default btn-minus" type="button">-</button>
+            </span>
+            <input type="text" class="unidades" data-id="${producto.id} value="0">
+            <span>
+                <button class="btn btn-default btn-plus" type="button">+</button>
+            </span>             
+                </div>
                 <a href="#nombre" class="btn btn-primary" id=${producto.id}>Agregar al carrito</a>
             </div>
         `
@@ -40,61 +60,44 @@ function autoquetas(etiquetas, carrito) {
     })
 }
 
-// Simulador Carrito v.2.4
+//Botón ordenar de A-Z
 
-/* principal(etiquetas)
+let botonAZ = document.getElementById("az")
 
-function principal(etiquetas) {
-    let carrito = []
+botonAZ.addEventListener("click", () => {
+    etiquetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
+    autoquetas(etiquetas, carrito)
+})
 
-    let opcion
-    do {
-        opcion = Number(prompt("Ingresar opción:\n1 - Listar productos\n2 - Ver información de un producto\n3 - Filtrar por material\n4 - Ordenar por nombre a-z\n5 - Ordenar por nombre z-a\n6 - Ordenar por precio a-z\n7 - Ordenar por precio z-a\n8 - Agregar producto al carrito\n9 - Finalizar compra\n10 - Crear etiqueta\n11 - Borrar etiqueta\n0 - para salir"))
-        switch (opcion) {
-            case 1:
-                alert(listar(etiquetas))
-                break
-            case 2:
-                buscarProducto(etiquetas)
-                break
-            case 3:
-                buscarPorMaterial(etiquetas)
-                break
-            case 4:
-                etiquetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
-                alert(listar(etiquetas))
-                break
-            case 5:
-                etiquetas.sort((a, b) => b.nombre.localeCompare(a.nombre))
-                alert(listar(etiquetas))
-                break
-            case 6:
-                etiquetas.sort((a, b) => a.precio - (b.precio))
-                alert(listar(etiquetas))
-                break
-            case 7:
-                etiquetas.sort((a, b) => b.precio - (a.precio))
-                alert(listar(etiquetas))
-                break
-            case 8:
-                agregarProductoAlCarrito(etiquetas, carrito)
-                break
-            case 9:
-                finalizarCompra(carrito)
-                carrito = []
-                break
-            case 10:
-                crear()
-                break
-            case 11:
-                borrar()
-                break
-            default:
-                break
-        }
-    } while (opcion != 0)
-}
- */
+//Botón ordenar de Z-A
+
+let botonZA = document.getElementById("za")
+
+botonZA.addEventListener("click", () => {
+    etiquetas.sort((a, b) => b.nombre.localeCompare(a.nombre))
+    autoquetas(etiquetas, carrito)
+})
+
+//Botón ordenar $<$
+
+let botonMenor = document.getElementById("menor")
+
+botonMenor.addEventListener("click", () => {
+    etiquetas.sort((a, b) => a.precio - (b.precio))
+    autoquetas(etiquetas, carrito)
+})
+
+//Botón ordenar $>$
+
+let botonMayor = document.getElementById("mayor")
+
+botonMayor.addEventListener("click", () => {
+    etiquetas.sort((a, b) => b.precio - (a.precio))
+    autoquetas(etiquetas, carrito)
+})
+
+// Listas de productos
+
 function listar(productos) {
     return productos.map(producto => producto.id + " - " + producto.nombre + " - Material: " + producto.material + " - $" + producto.precio).join("\n")
 }
@@ -162,6 +165,7 @@ function agregarProductoAlCarrito(etiquetas, carrito, e) {
         } else {
             carrito.push({
                 id: productoBuscado.id,
+                img: productoBuscado.img,
                 nombre: productoBuscado.nombre,
                 precioUnitario: productoBuscado.precio,
                 unidades: 1,
@@ -169,47 +173,9 @@ function agregarProductoAlCarrito(etiquetas, carrito, e) {
             })
         }
         alert("Se agregó producto al carrito")
+        localStorage.setItem("carrito", JSON.stringify(carrito))
     }
-    //mostrarCarrito(carrito)
     itemsCarrito(carrito)
-}
-
-function itemsCarrito(productosCarrito) {
-    let contadorCarrito = document.getElementById("contador-carrito")
-    contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
-}
-
-/* let carro = document.getElementById("carrito")
-
-carro.addEventListener("", () => mostrarCarrito(carrito))
- */
-function mostrarCarrito(productosCarrito) {
-    let statusCarrito = document.getElementById("carrito")
-    statusCarrito.innerHTML = ""
-
-    productosCarrito.forEach(producto => {
-        let tarjetaCarrito = document.createElement("div")
-        tarjetaCarrito.className = "carrito"
-        tarjetaCarrito.innerHTML = `
-            <div class="card-body">
-            <h4 class="carrito-title">${producto.nombre}</h4>
-            <p class="carrito-prize">$${producto.precio} </p>
-            <p class="carrito-prize">Cantidad :${producto.unidades} </p>
-            <p class="carrito-prize">Subtotal :$${producto.subtotal} </p>
-        </div>
-    `
-        statusCarrito.appendChild(tarjetaCarrito)
-    })
-}
-
-function finalizarCompra(carrito) {
-    if (carrito.length === 0) {
-        alert("Primero debe agregar productos al carrito")
-    } else {
-        let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
-        alert("El total a pagar es " + total)
-        alert("Gracias por su compra")
-    }
 }
 
 //Función crear etiquetas

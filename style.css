@@ -1,4 +1,11 @@
-#fondoimg {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+    
+    #fondoimg {
     position: relative;
     background-image: url(./media/fonfofondo1.jpg);
     height: 100vh;
@@ -40,8 +47,9 @@ div.box h3 {
 }
 
 img {
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
+    margin-top: 5px;
 }
 
 #card {
@@ -68,8 +76,8 @@ img {
     font-weight: bold;
 }
 
-.card-prize {
-    font-size: 25px;
+.card-prize, .card-text {
+    font-size: 18px;
 }
 
 .card:hover {
@@ -78,50 +86,113 @@ img {
     background: linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%);
 }
 
-#boton {
-    font-weight: bolder;
-    border-radius: 30px;
-    font-size: 35px;
-    margin-top: 15px;
-    margin-bottom: 25px;
+.cantidades {
+    display: inline-flex;
+    margin-bottom: 5px;
+}
+
+.unidades {width: 45px;}
+
+.botonera {
+    display: flex;
+    align-items: center;
 }
 
 #buscador {
-    display: inline;
-    position: absolute;
     width: 250px;
     height: 33px;
     border: solid 2px black;
     margin-left: 10px;
     margin-bottom: 10px;
-    align-items: center;
+    margin-right: 10px;
 }
 
 #buscar {
-    display: inline;
-    position: relative;
     background-image: url(./media/search.png);
     background-size: cover;
     width: 33px;
     height: 33px;
-    align-items: center;
-    margin-left: 265px;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 .imagencarro {
-    position: relative;
     background-image: url(./media/carro.png);
     background-size: cover;
     border: 2px solid black;
-    box-sizing: border-box;
-    width: 33px;
     height: 33px;
-        margin-bottom: 10px;
-    display: inline;
+    width: 33px;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
-.contador {
-    position: relative;
-    font-size: 25px;
-    display: inline;
+.contador {font-size: 25px;}
+
+.boton {
+    height: 33px;
+    margin-bottom: 10px;
+    margin-top: 3px;
+    font-weight: bold;
+    padding: 4px;
+    margin-left: 10px;
+}
+
+.carrito {
+    background-color: #f4c95d;
+    display: flex;
+}
+
+.fotocarro {
+    height: 150px;
+    width: 150px;
+    padding: 5px;
+}
+
+.card-carrito {
+    font-size: 20px;
+}
+
+/* Footer */
+
+#footer {
+    border-top: 5px solid #f4c95d;
+    display: inline-flex;
+    padding: 30px;
+}
+
+.form-control {
+    margin-bottom: 5px;
+    margin-right: 100px;
+}
+
+label {
+    font-weight: bold;
+}
+
+button {
+    justify-content: center;
+}
+
+
+p {
+    font-weight: bolder;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+a.p {
+    font-weight: bolder;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+iframe.mapa {
+    height: 300px;
+    width: 300px;
 }
