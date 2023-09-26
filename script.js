@@ -9,12 +9,9 @@ let etiquetas = [
     { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000, img: "petiribi1" },
 ]
 
-let carrito = []
-
 let carritoRecuperado = localStorage.getItem("carrito")
-if (carritoRecuperado) {
-    carrito = JSON.parse(carritoRecuperado)
-}
+let carrito = carritoRecuperado ? JSON.parse(carritoRecuperado) : []
+itemsCarrito(carrito)
 
 // Contador carrito
 
@@ -31,33 +28,58 @@ function autoquetas(etiquetas, carrito) {
     let contenedor = document.getElementById("card")
     contenedor.innerHTML = ""
 
-    etiquetas.forEach(producto => {
+    etiquetas.forEach(({ img, descripcion, nombre, medidas, precio, id }) => {
         let tarjeta = document.createElement("div")
         tarjeta.className = "card"
         tarjeta.innerHTML = `
-        <img src=./media/tablas/${producto.img}.jpeg class="card-img-top"
-            alt=${producto.descripcion}>
+        <img src=./media/tablas/${img}.jpeg class="card-img-top"
+            alt=${descripcion}>
             <div class="card-body">
-                <h4 class="card-title">${producto.nombre}</h4>
-                <p class="card-text">Medidas ${producto.medidas}cm</p>
-                <p class="card-prize">$${producto.precio} </p>
+                <h4 class="card-title">${nombre}</h4>
+                <p class="card-text">Medidas ${medidas}cm</p>
+                <p class="card-prize">$${precio} </p>
                 <div class="cantidades">
                 <span>
-                <button class="btn btn-default btn-minus" type="button">-</button>
+                <button class="btn btn-default btn-minus" type="button" onclick="decrementarCantidad()">-</button>
             </span>
-            <input type="text" class="unidades" data-id="${producto.id} value="0">
+            <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
             <span>
-                <button class="btn btn-default btn-plus" type="button">+</button>
+                <button class="btn btn-default btn-plus" type="button" onclick="incrementarCantidad()">+</button>
             </span>             
                 </div>
-                <a href="#nombre" class="btn btn-primary" id=${producto.id}>Agregar al carrito</a>
+                <a href="#nombre" class="btn btn-primary" id=${id}>Agregar al carrito</a>
             </div>
         `
         contenedor.appendChild(tarjeta)
 
-        let botonAgregrarCarrito = document.getElementById(producto.id)
+        let botonAgregrarCarrito = document.getElementById(id)
         botonAgregrarCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
     })
+}
+
+// Contador tarjetas
+
+function itemsCarrito(productosCarrito) {
+    let contadorCarrito = document.getElementById("contador-carrito")
+    contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
+}
+
+
+const cantidadElement = document.getElementById('cantidad-unidades')
+const botonAgregarCarrito = document.getElementById('agregar-al-carrito')
+
+function incrementarCantidad() {
+    const cantidadActual = parseInt(cantidadElement.textContent)
+    cantidadElement.textContent = cantidadActual + 1
+    agregarProductoAlCarrito(cantidadActual + 1)
+}
+
+function decrementarCantidad() {
+    const cantidadActual = parseInt(cantidadElement.textContent)
+    if (cantidadActual > 0) {
+        cantidadElement.textContent = cantidadActual - 1
+    agregarProductoAlCarrito(cantidadActual + 1)
+    }
 }
 
 //Botón ordenar de A-Z
@@ -110,6 +132,13 @@ function descripcion(productos) {
 
 let buscador = document.getElementById("buscador")
 let botonBuscar = document.getElementById("buscar")
+
+buscador.addEventListener("keydown", (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault()
+        buscarProducto(etiquetas)
+    }
+})
 
 botonBuscar.addEventListener("click", () => buscarProducto(etiquetas))
 

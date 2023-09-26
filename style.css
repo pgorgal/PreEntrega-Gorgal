@@ -26,7 +26,7 @@ h2 {
     -webkit-text-stroke: 0.7px #f4c95d;
 }
 
-span {
+span.header {
     color: #f4c95d;
     -webkit-text-stroke: 1.5px #2e1f27;
 }
