@@ -38,33 +38,31 @@ function autoquetas(etiquetas, carrito) {
                 <h4 class="card-title">${nombre}</h4>
                 <p class="card-text">Medidas ${medidas}cm</p>
                 <p class="card-prize">$${precio} </p>
-                <div class="cantidades">
-                <span>
-                <button class="btn btn-default btn-minus" type="button" id=${id} >-</button>
-            </span>
-            <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
-            <span>
-                <button class="btn btn-default btn-plus" type="button" id=${id}>+</button>
-            </span>             
+                    <div class="cantidades">
+                        <span>
+                            <button class="btn btn-default btn-minus" type="button" id=${id} >-</button>
+                        </span>
+                        <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
+                        <span>
+                            <button class="btn btn-default btn-plus" type="button" id=${id}>+</button>
+                        </span>             
+                    </div>
+            </div>
         `
         contenedor.appendChild(tarjeta)
-
+        
         let menos = document.getElementById(id)
         menos.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e))
-        
+
         let mas = document.getElementById(id)
         mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
     })
 }
 
-/* function masMenos()
-if (menos) {
-} else if (mas) {
-} */
 
 // Contador tarjetas
 
-
+//VER!!!!
 
 //Botón ordenar de A-Z
 
