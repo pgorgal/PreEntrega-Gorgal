@@ -40,47 +40,31 @@ function autoquetas(etiquetas, carrito) {
                 <p class="card-prize">$${precio} </p>
                 <div class="cantidades">
                 <span>
-                <button class="btn btn-default btn-minus" type="button" onclick="decrementarCantidad()">-</button>
+                <button class="btn btn-default btn-minus" type="button" id=${id} >-</button>
             </span>
             <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
             <span>
-                <button class="btn btn-default btn-plus" type="button" onclick="incrementarCantidad()">+</button>
+                <button class="btn btn-default btn-plus" type="button" id=${id}>+</button>
             </span>             
-                </div>
-                <a href="#nombre" class="btn btn-primary" id=${id}>Agregar al carrito</a>
-            </div>
         `
         contenedor.appendChild(tarjeta)
 
-        let botonAgregrarCarrito = document.getElementById(id)
-        botonAgregrarCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
+        let menos = document.getElementById(id)
+        menos.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e))
+        
+        let mas = document.getElementById(id)
+        mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
     })
 }
 
+/* function masMenos()
+if (menos) {
+} else if (mas) {
+} */
+
 // Contador tarjetas
 
-function itemsCarrito(productosCarrito) {
-    let contadorCarrito = document.getElementById("contador-carrito")
-    contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
-}
 
-
-const cantidadElement = document.getElementById('cantidad-unidades')
-const botonAgregarCarrito = document.getElementById('agregar-al-carrito')
-
-function incrementarCantidad() {
-    const cantidadActual = parseInt(cantidadElement.textContent)
-    cantidadElement.textContent = cantidadActual + 1
-    agregarProductoAlCarrito(cantidadActual + 1)
-}
-
-function decrementarCantidad() {
-    const cantidadActual = parseInt(cantidadElement.textContent)
-    if (cantidadActual > 0) {
-        cantidadElement.textContent = cantidadActual - 1
-    agregarProductoAlCarrito(cantidadActual + 1)
-    }
-}
 
 //Botón ordenar de A-Z
 
@@ -201,7 +185,31 @@ function agregarProductoAlCarrito(etiquetas, carrito, e) {
                 subtotal: productoBuscado.precio
             })
         }
-        alert("Se agregó producto al carrito")
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+    }
+    itemsCarrito(carrito)
+}
+
+// Quitar del carrito
+
+function quitarProductoDelCarrito(etiquetas, carrito, e) {
+    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
+    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
+
+    if (productoBuscado) {
+        if (productoEnCarrito) {
+            productoEnCarrito.unidades--
+            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
+        } else {
+            carrito.push({
+                id: productoBuscado.id,
+                img: productoBuscado.img,
+                nombre: productoBuscado.nombre,
+                precioUnitario: productoBuscado.precio,
+                unidades: 1,
+                subtotal: productoBuscado.precio
+            })
+        }
         localStorage.setItem("carrito", JSON.stringify(carrito))
     }
     itemsCarrito(carrito)
