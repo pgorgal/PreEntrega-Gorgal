@@ -38,38 +38,19 @@ function autoquetas(etiquetas, carrito) {
                 <h4 class="card-title">${nombre}</h4>
                 <p class="card-text">Medidas ${medidas}cm</p>
                 <p class="card-prize">$${precio} </p>
-                    <div class="cantidades">
-                        <span>
-                            <button class="btn btn-default btn-minus tarjbtn" type="button" id="res-${id}">-</button>
-                        </span>
-                        <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
-                        <span>
-                            <button class="btn btn-default btn-plus tarjbtn" type="button" id="sum-${id}">+</button>
-                        </span>             
-                    </div>
+                <span>
+                    <button class="btn btn-primary" type="button" id=${id}>Agregar al carrito</button>
+                </span>             
+            </div>
             </div>
         `
         contenedor.appendChild(tarjeta)
 
-
-
-        /*  let menos = document.getElementById(`res-${id}`)
-         let idProducto = menos.id.substring(4)
-         idProducto.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e)) */
-
-        /* let mas = document.getElementById(`sum-${id}`)
-        mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e)) */
+        let botonAgregarAlCarrito = document.getElementById(id)
+        botonAgregarAlCarrito.addEventListener("click", (e) => agregarProductoAlCarrito)
     })
 }
 
-/* function itemsTarjeta(productosCarrito) {
-    let contadorTarjeta = document.getElementById("cantidad-unidades")
-    contadorTarjeta.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
-}
- */
-// Contador tarjetas
-
-//VER!!!!
 
 //Botón ordenar de A-Z
 
