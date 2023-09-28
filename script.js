@@ -47,7 +47,7 @@ function autoquetas(etiquetas, carrito) {
         contenedor.appendChild(tarjeta)
 
         let botonAgregarAlCarrito = document.getElementById(id)
-        botonAgregarAlCarrito.addEventListener("click", (e) => agregarProductoAlCarrito)
+        botonAgregarAlCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
     })
 }
 
