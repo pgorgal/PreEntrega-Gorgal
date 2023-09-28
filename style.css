@@ -98,8 +98,8 @@ img {
     align-items: center;
 }
 
-#buscador {
-    width: 250px;
+#buscador, #buscadorMateriales {
+    width: 200px;
     height: 33px;
     border: solid 2px black;
     margin-left: 10px;
@@ -107,7 +107,7 @@ img {
     margin-right: 10px;
 }
 
-#buscar {
+#buscar, #buscarMateriales {
     background-image: url(./media/search.png);
     background-size: cover;
     width: 33px;
@@ -151,6 +151,8 @@ img {
 .card-carrito {
     font-size: 20px;
 }
+
+.tarjbtn {border: solid 1px;}
 
 /* Footer */
 

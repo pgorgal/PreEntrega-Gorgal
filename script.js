@@ -40,26 +40,33 @@ function autoquetas(etiquetas, carrito) {
                 <p class="card-prize">$${precio} </p>
                     <div class="cantidades">
                         <span>
-                            <button class="btn btn-default btn-minus" type="button" id=${id} >-</button>
+                            <button class="btn btn-default btn-minus tarjbtn" type="button" id="res-${id}">-</button>
                         </span>
                         <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
                         <span>
-                            <button class="btn btn-default btn-plus" type="button" id=${id}>+</button>
+                            <button class="btn btn-default btn-plus tarjbtn" type="button" id="sum-${id}">+</button>
                         </span>             
                     </div>
             </div>
         `
         contenedor.appendChild(tarjeta)
-        
-        let menos = document.getElementById(id)
-        menos.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e))
 
-        let mas = document.getElementById(id)
-        mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
+
+
+        /*  let menos = document.getElementById(`res-${id}`)
+         let idProducto = menos.id.substring(4)
+         idProducto.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e)) */
+
+        /* let mas = document.getElementById(`sum-${id}`)
+        mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e)) */
     })
 }
 
-
+/* function itemsTarjeta(productosCarrito) {
+    let contadorTarjeta = document.getElementById("cantidad-unidades")
+    contadorTarjeta.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
+}
+ */
 // Contador tarjetas
 
 //VER!!!!
@@ -133,29 +140,43 @@ function buscarProducto(etiquetas) {
     if (productoBuscado.length > 0) {
         autoquetas(productoBuscado)
         productoElegido = true
+        buscador.value = ""
     } else {
         alert("Producto incorrecto o inexistente")
         autoquetas(etiquetas, carrito)
+        buscador.value = ""
     }
 }
 
 // Buscar por Material
 
+let buscadorMateriales = document.getElementById("buscadorMateriales")
+let botonBuscarMateriales = document.getElementById("buscarMateriales")
+
+buscadorMateriales.addEventListener("keydown", (e) => {
+    if (e.keyCode === 13) {
+        e.preventDefault()
+        buscarPorMaterial(etiquetas)
+    }
+})
+
+botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial(etiquetas))
+
 function buscarPorMaterial(productos) {
     let materialElegido = false
+    let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase()
 
-    do {
-        let filtroMaterial = prompt("Ingresá el material").toLowerCase()
-        let materialBuscado = productos.filter(etiqueta => etiqueta.material.toLowerCase() === filtroMaterial)
+    let materialBuscado = productos.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales))
 
-        if (materialBuscado.length > 0) {
-            alert(listar(materialBuscado))
-            materialElegido = true
-        } else {
-            alert("Material incorrecto o inexistente")
-            alert("Materiales disponibles:\n" + listarMaterialesUnicos(productos))
-        }
-    } while (!materialElegido)
+    if (materialBuscado.length > 0) {
+        autoquetas(materialBuscado)
+        materialElegido = true
+        buscadorMateriales.value = ""
+    } else {
+        alert("Materiales disponibles:\n" + listarMaterialesUnicos(productos))
+        autoquetas(etiquetas, carrito)
+        buscadorMateriales.value = ""
+    }
 }
 
 function listarMaterialesUnicos(productos) {
