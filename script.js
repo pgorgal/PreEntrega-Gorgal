@@ -13,6 +13,7 @@ let carritoRecuperado = localStorage.getItem("carrito")
 let carrito = carritoRecuperado ? JSON.parse(carritoRecuperado) : []
 itemsCarrito(carrito)
 
+
 // Contador carrito
 
 function itemsCarrito(productosCarrito) {
@@ -46,10 +47,41 @@ function autoquetas(etiquetas, carrito) {
         `
         contenedor.appendChild(tarjeta)
 
-        let botonAgregarAlCarrito = document.getElementById(id)
-        botonAgregarAlCarrito.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e))
+        let menos = document.getElementById(`res-${id}`)
+        menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
+
+        let mas = document.getElementById(`sum-${id}`)
+        mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1));
     })
 }
+
+// Sumar y restar al carrito
+
+function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
+    let productoBuscado = etiquetas.find(producto => producto.id === idProducto)
+    let productoEnCarrito = carrito.find(producto => producto.id === idProducto)
+
+    if (productoBuscado) {
+        if (productoEnCarrito) {
+            productoEnCarrito.unidades += cantidad
+            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
+        } else {
+            carrito.push({
+                id: productoBuscado.id,
+                img: productoBuscado.img,
+                nombre: productoBuscado.nombre,
+                precioUnitario: productoBuscado.precio,
+                unidades: 1,
+                subtotal: productoBuscado.precio
+            })
+        }
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+    }
+    itemsCarrito(carrito)
+}
+
+// Contador tarjetas
+
 
 
 //Botón ordenar de A-Z
@@ -163,56 +195,6 @@ function buscarPorMaterial(productos) {
 function listarMaterialesUnicos(productos) {
     let materialesUnicos = [...new Set(productos.map(item => item.material))]
     return materialesUnicos.join("\n")
-}
-
-// Agregar al carrito
-
-function agregarProductoAlCarrito(etiquetas, carrito, e) {
-    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
-    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
-
-    if (productoBuscado) {
-        if (productoEnCarrito) {
-            productoEnCarrito.unidades++
-            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
-        } else {
-            carrito.push({
-                id: productoBuscado.id,
-                img: productoBuscado.img,
-                nombre: productoBuscado.nombre,
-                precioUnitario: productoBuscado.precio,
-                unidades: 1,
-                subtotal: productoBuscado.precio
-            })
-        }
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-    }
-    itemsCarrito(carrito)
-}
-
-// Quitar del carrito
-
-function quitarProductoDelCarrito(etiquetas, carrito, e) {
-    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
-    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
-
-    if (productoBuscado) {
-        if (productoEnCarrito) {
-            productoEnCarrito.unidades--
-            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
-        } else {
-            carrito.push({
-                id: productoBuscado.id,
-                img: productoBuscado.img,
-                nombre: productoBuscado.nombre,
-                precioUnitario: productoBuscado.precio,
-                unidades: 1,
-                subtotal: productoBuscado.precio
-            })
-        }
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-    }
-    itemsCarrito(carrito)
 }
 
 //Función crear etiquetas
