@@ -43,7 +43,7 @@ function autoquetas(etiquetas, carrito) {
                         <span>
                             <button class="btn btn-default btn-minus tarjbtn" type="button" id="res-${id}">-</button>
                         </span>
-                        <p class="cantidad">(<span id="cantidad-unidades" class="cantidad">0</span>)</p>
+                        <p class="cantidad">(<span id="cantidad-${id}" class="cantidad">${obtenerCantidadProducto(carrito, id)}</span>)</p>
                         <span>
                             <button class="btn btn-default btn-plus tarjbtn" type="button" id="sum-${id}">+</button>
                         </span>             
@@ -81,13 +81,26 @@ function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
             })
         }
         localStorage.setItem("carrito", JSON.stringify(carrito))
+        actualizarCantidad(idProducto, carrito)
     }
     itemsCarrito(carrito)
 }
 
 // Contador tarjetas
 
+function actualizarCantidad(idProducto, carrito) {
+    let cantidadElement = document.getElementById(`cantidad-${idProducto}`);
+    let productoEnCarrito = carrito.find(producto => producto.id === idProducto);
 
+    if (cantidadElement && productoEnCarrito) {
+        cantidadElement.textContent = productoEnCarrito.unidades;
+    }
+}
+
+function obtenerCantidadProducto(carrito, idProducto) {
+    let productoEnCarrito = carrito.find(producto => producto.id === idProducto)
+    return productoEnCarrito ? productoEnCarrito.unidades : 0
+}
 
 //Botón ordenar de A-Z
 
@@ -143,20 +156,20 @@ let botonBuscar = document.getElementById("buscar")
 buscador.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
         e.preventDefault()
-        buscarProducto(etiquetas)
+        buscarProducto()
     }
 })
 
-botonBuscar.addEventListener("click", () => buscarProducto(etiquetas))
+botonBuscar.addEventListener("click", () => buscarProducto())
 
-function buscarProducto(etiquetas) {
+function buscarProducto() {
     let productoElegido = false
     let textoBusqueda = buscador.value.trim().toLowerCase()
 
     let productoBuscado = etiquetas.filter(producto => producto.nombre.toLowerCase().includes(textoBusqueda))
 
     if (productoBuscado.length > 0) {
-        autoquetas(productoBuscado)
+        autoquetas(productoBuscado, carrito)
         productoElegido = true
         buscador.value = ""
     } else {
@@ -174,29 +187,26 @@ let botonBuscarMateriales = document.getElementById("buscarMateriales")
 buscadorMateriales.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
         e.preventDefault()
-        buscarPorMaterial(etiquetas)
+        buscarPorMaterial()
     }
 })
 
-botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial(etiquetas))
+botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial())
 
-function buscarPorMaterial(productos) {
-    let materialElegido = false
-    let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase()
+function buscarPorMaterial() {
+    let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase();
 
-    let materialBuscado = productos.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales))
+    let materialBuscado = etiquetas.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales));
 
     if (materialBuscado.length > 0) {
-        autoquetas(materialBuscado)
-        materialElegido = true
+        autoquetas(materialBuscado, carrito)
         buscadorMateriales.value = ""
     } else {
-        alert("Materiales disponibles:\n" + listarMaterialesUnicos(productos))
+        alert("Materiales disponibles:\n" + listarMaterialesUnicos(etiquetas))
         autoquetas(etiquetas, carrito)
         buscadorMateriales.value = ""
     }
 }
-
 function listarMaterialesUnicos(productos) {
     let materialesUnicos = [...new Set(productos.map(item => item.material))]
     return materialesUnicos.join("\n")
