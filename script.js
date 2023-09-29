@@ -202,56 +202,6 @@ function listarMaterialesUnicos(productos) {
     return materialesUnicos.join("\n")
 }
 
-/* // Agregar al carrito
-
-function agregarProductoAlCarrito(etiquetas, carrito, e) {
-    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
-    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
-
-    if (productoBuscado) {
-        if (productoEnCarrito) {
-            productoEnCarrito.unidades++
-            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
-        } else {
-            carrito.push({
-                id: productoBuscado.id,
-                img: productoBuscado.img,
-                nombre: productoBuscado.nombre,
-                precioUnitario: productoBuscado.precio,
-                unidades: 1,
-                subtotal: productoBuscado.precio
-            })
-        }
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-    }
-    itemsCarrito(carrito)
-}
-
-// Quitar del carrito
-
-function quitarProductoDelCarrito(etiquetas, carrito, e) {
-    let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
-    let productoEnCarrito = carrito.find(producto => producto.id === productoBuscado.id)
-
-    if (productoBuscado) {
-        if (productoEnCarrito) {
-            productoEnCarrito.unidades--
-            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
-        } else {
-            carrito.push({
-                id: productoBuscado.id,
-                img: productoBuscado.img,
-                nombre: productoBuscado.nombre,
-                precioUnitario: productoBuscado.precio,
-                unidades: 1,
-                subtotal: productoBuscado.precio
-            })
-        }
-        localStorage.setItem("carrito", JSON.stringify(carrito))
-    }
-    itemsCarrito(carrito)
-} */
-
 //Función crear etiquetas
 
 function crear() {
