@@ -13,6 +13,7 @@ let carritoRecuperado = localStorage.getItem("carrito")
 let carrito = carritoRecuperado ? JSON.parse(carritoRecuperado) : []
 itemsCarrito(carrito)
 
+
 // Contador carrito
 
 function itemsCarrito(productosCarrito) {
@@ -51,25 +52,42 @@ function autoquetas(etiquetas, carrito) {
         `
         contenedor.appendChild(tarjeta)
 
+        let menos = document.getElementById(`res-${id}`)
+        menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
 
-
-        /*  let menos = document.getElementById(`res-${id}`)
-         let idProducto = menos.id.substring(4)
-         idProducto.addEventListener("click", (e) => quitarProductoDelCarrito(etiquetas, carrito, e)) */
-
-        /* let mas = document.getElementById(`sum-${id}`)
-        mas.addEventListener("click", (e) => agregarProductoAlCarrito(etiquetas, carrito, e)) */
+        let mas = document.getElementById(`sum-${id}`)
+        mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1));
     })
 }
 
-/* function itemsTarjeta(productosCarrito) {
-    let contadorTarjeta = document.getElementById("cantidad-unidades")
-    contadorTarjeta.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
+// Sumar y restar al carrito
+
+function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
+    let productoBuscado = etiquetas.find(producto => producto.id === idProducto)
+    let productoEnCarrito = carrito.find(producto => producto.id === idProducto)
+
+    if (productoBuscado) {
+        if (productoEnCarrito) {
+            productoEnCarrito.unidades += cantidad
+            productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
+        } else {
+            carrito.push({
+                id: productoBuscado.id,
+                img: productoBuscado.img,
+                nombre: productoBuscado.nombre,
+                precioUnitario: productoBuscado.precio,
+                unidades: 1,
+                subtotal: productoBuscado.precio
+            })
+        }
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+    }
+    itemsCarrito(carrito)
 }
- */
+
 // Contador tarjetas
 
-//VER!!!!
+
 
 //Botón ordenar de A-Z
 
@@ -184,7 +202,7 @@ function listarMaterialesUnicos(productos) {
     return materialesUnicos.join("\n")
 }
 
-// Agregar al carrito
+/* // Agregar al carrito
 
 function agregarProductoAlCarrito(etiquetas, carrito, e) {
     let productoBuscado = etiquetas.find(producto => producto.id === Number(e.target.id))
@@ -232,7 +250,7 @@ function quitarProductoDelCarrito(etiquetas, carrito, e) {
         localStorage.setItem("carrito", JSON.stringify(carrito))
     }
     itemsCarrito(carrito)
-}
+} */
 
 //Función crear etiquetas
 
