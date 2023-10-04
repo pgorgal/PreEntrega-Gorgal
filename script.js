@@ -56,7 +56,7 @@ function autoquetas(etiquetas, carrito) {
         menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
 
         let mas = document.getElementById(`sum-${id}`)
-        mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1));
+        mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1))
     })
 }
 
@@ -70,6 +70,11 @@ function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
         if (productoEnCarrito) {
             productoEnCarrito.unidades += cantidad
             productoEnCarrito.subtotal = productoEnCarrito.unidades * productoEnCarrito.precioUnitario
+            if (cantidad > 0) {
+                tostada("Se agregó el producto al carrito", 1500)
+            } else if (cantidad < 0) {
+                tostada("Se quitó el producto del carrito", 1500)
+            }
         } else {
             carrito.push({
                 id: productoBuscado.id,
@@ -79,11 +84,24 @@ function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
                 unidades: 1,
                 subtotal: productoBuscado.precio
             })
+            tostada("Se agregó el producto al carrito", 1500)
         }
         localStorage.setItem("carrito", JSON.stringify(carrito))
         actualizarCantidad(idProducto, carrito)
     }
     itemsCarrito(carrito)
+}
+
+// Tostadas
+
+function tostada(text, duration) {
+    Toastify({
+        text,
+        duration,
+        style: {
+            background: "linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%)",
+          }
+    }).showToast()
 }
 
 // Contador tarjetas

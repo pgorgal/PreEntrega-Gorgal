@@ -4,8 +4,8 @@
     box-sizing: border-box;
 }
 
-    
-    #fondoimg {
+
+#fondoimg {
     position: relative;
     background-image: url(./media/fonfofondo1.jpg);
     height: 100vh;
@@ -76,7 +76,8 @@ img {
     font-weight: bold;
 }
 
-.card-prize, .card-text {
+.card-prize,
+.card-text {
     font-size: 18px;
 }
 
@@ -91,14 +92,17 @@ img {
     margin-bottom: 5px;
 }
 
-.unidades {width: 45px;}
+.unidades {
+    width: 45px;
+}
 
 .botonera {
     display: flex;
     align-items: center;
 }
 
-#buscador, #buscadorMateriales {
+#buscador,
+#buscadorMateriales {
     width: 200px;
     height: 33px;
     border: solid 2px black;
@@ -107,7 +111,8 @@ img {
     margin-right: 10px;
 }
 
-#buscar, #buscarMateriales {
+#buscar,
+#buscarMateriales {
     background-image: url(./media/search.png);
     background-size: cover;
     width: 33px;
@@ -126,16 +131,23 @@ img {
     margin-right: 10px;
 }
 
-.contador {font-size: 25px;}
+.contador {
+    font-size: 25px;
+}
 
 .boton {
     height: 33px;
+    border: solid 2p;
+    border-radius: 5px;
     margin-bottom: 10px;
     margin-top: 3px;
     font-weight: bold;
     padding: 4px;
     margin-left: 10px;
+    background: linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%);
 }
+
+#home {url: ./index .htmal;}
 
 .carrito {
     background-color: #f4c95d;
@@ -152,7 +164,10 @@ img {
     font-size: 20px;
 }
 
-.tarjbtn {border: solid 1px;}
+.tarjbtn {
+    border: solid 1px;
+}
+
 
 /* Footer */
 

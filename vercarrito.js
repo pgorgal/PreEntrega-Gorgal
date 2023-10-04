@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function mostrarCarrito(carrito) {
     if (carrito.length === 0) {
-        let tarjetaCarrito = document.createElement("div")
+        let tarjetaCarrito = document.createElement("div")  
         tarjetaCarrito.className = "carrito"
         tarjetaCarrito.innerHTML = `
-                <p class="card-carrito">Primero debe agregar productos al carrito</p>        
+                <p class="card-carrito">El carrito está vacío</p>        
         `
         let contenedorCarrito = document.getElementById("carrito")
         contenedorCarrito.innerHTML = ""
@@ -23,7 +23,7 @@ function mostrarCarrito(carrito) {
         let statusCarrito = document.getElementById("carrito")
         statusCarrito.innerHTML = ""
 
-        carrito.forEach(({img, descripcion, nombre, precioUnitario, unidades, subtotal}) => {
+        carrito.forEach(({ img, descripcion, nombre, precioUnitario, unidades, subtotal }) => {
             let tarjetaCarrito = document.createElement("div")
             tarjetaCarrito.className = "carrito"
             tarjetaCarrito.innerHTML = `
@@ -49,16 +49,18 @@ botonComprar.addEventListener("click", () => finalizarCompra(carrito))
 
 function finalizarCompra(carrito) {
     if (carrito.length === 0) {
-        alert("Primero debe agregar productos al carrito")
+       alerta("Primero debe agregar productos al carrito", 'warning')    
     } else {
         let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
-        alert("El total a pagar es " + total)
-        alert("Gracias por su compra")
-
-        carrito = []
-        localStorage.removeItem("carrito")
-        mostrarCarrito(carrito)
+        Swal.fire({
+            title: 'El total a pagar es $' + total,
+            text: 'Gracias por su compra',
+            icon: 'success'
+        })
     }
+    carrito = []
+    localStorage.removeItem("carrito")
+    mostrarCarrito(carrito)
 }
 
 // Vaciar carrito 
@@ -69,10 +71,19 @@ botonVaciar.addEventListener("click", () => vaciarCarrito(carrito))
 
 function vaciarCarrito(carrito) {
     if (carrito.length === 0) {
-        alert("No hay productos en el carrito")
+        alerta("Primero debe agregar productos al carrito", 'warning')  
     } else {
         carrito = []
         localStorage.removeItem("carrito")
         mostrarCarrito(carrito)
     }
+}
+
+// Cartel de alerta
+
+function alerta(title, icon){ 
+Swal.fire({
+    title,
+    icon
+})
 }
