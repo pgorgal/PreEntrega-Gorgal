@@ -57,10 +57,10 @@ function finalizarCompra(carrito) {
             text: 'Gracias por su compra',
             icon: 'success'
         })
+        carrito = []
+        localStorage.clear("carrito")
+        mostrarCarrito(carrito)
     }
-    carrito = []
-    localStorage.removeItem("carrito")
-    mostrarCarrito(carrito)
 }
 
 // Vaciar carrito 
@@ -74,7 +74,7 @@ function vaciarCarrito(carrito) {
         alerta("Primero debe agregar productos al carrito", 'warning')  
     } else {
         carrito = []
-        localStorage.removeItem("carrito")
+        localStorage.clear("carrito")
         mostrarCarrito(carrito)
     }
 }
