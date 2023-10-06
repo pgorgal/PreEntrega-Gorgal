@@ -53,7 +53,13 @@ function autoquetas(etiquetas, carrito) {
         contenedor.appendChild(tarjeta)
 
         let menos = document.getElementById(`res-${id}`)
-        menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
+        let cantidadProductos = obtenerCantidadProducto(carrito, id)
+        if (cantidadProductos > 0) {
+            menos.disabled = false
+            menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
+        } else {
+            menos.disabled = true
+        }
 
         let mas = document.getElementById(`sum-${id}`)
         mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1))
@@ -100,18 +106,18 @@ function tostada(text, duration) {
         duration,
         style: {
             background: "linear-gradient(150deg, rgb(136, 54, 2) 0%, rgb(255, 165, 66) 49%, rgb(252, 176, 69) 68%, rgb(221, 143, 35) 88%, rgb(198, 116, 0) 100%)",
-          }
+        }
     }).showToast()
 }
 
 // Contador tarjetas
 
 function actualizarCantidad(idProducto, carrito) {
-    let cantidadElement = document.getElementById(`cantidad-${idProducto}`);
-    let productoEnCarrito = carrito.find(producto => producto.id === idProducto);
+    let cantidadElement = document.getElementById(`cantidad-${idProducto}`)
+    let productoEnCarrito = carrito.find(producto => producto.id === idProducto)
 
     if (cantidadElement && productoEnCarrito) {
-        cantidadElement.textContent = productoEnCarrito.unidades;
+        cantidadElement.textContent = productoEnCarrito.unidades
     }
 }
 
