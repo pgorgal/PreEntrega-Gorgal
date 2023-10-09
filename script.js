@@ -53,16 +53,18 @@ function autoquetas(etiquetas, carrito) {
         contenedor.appendChild(tarjeta)
 
         let menos = document.getElementById(`res-${id}`)
-        let cantidadProductos = obtenerCantidadProducto(carrito, id)
-        if (cantidadProductos > 0) {
-            menos.disabled = false
-            menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
-        } else {
-            menos.disabled = true
-        }
+        menos.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, -1))
 
         let mas = document.getElementById(`sum-${id}`)
         mas.addEventListener("click", () => modificarCantidad(etiquetas, carrito, id, 1))
+
+        let cantidadProductos = obtenerCantidadProducto(carrito, id)
+        if (cantidadProductos === 0) {
+            menos.disabled = true
+        } else {
+            menos.disabled = false
+        }
+        console.log(carrito)
     })
 }
 
@@ -81,6 +83,7 @@ function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
             } else if (cantidad < 0) {
                 tostada("Se quitó el producto del carrito", 1500)
             }
+            actualizarBotonMenos(idProducto, carrito)
         } else {
             carrito.push({
                 id: productoBuscado.id,
@@ -96,6 +99,13 @@ function modificarCantidad(etiquetas, carrito, idProducto, cantidad) {
         actualizarCantidad(idProducto, carrito)
     }
     itemsCarrito(carrito)
+}
+
+function actualizarBotonMenos(idProducto, carrito) {
+    let menos = document.getElementById(`res-${idProducto}`)
+    let cantidadActual = obtenerCantidadProducto(carrito, idProducto)
+
+    menos.disabled = cantidadActual === 0
 }
 
 // Tostadas
