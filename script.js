@@ -207,7 +207,7 @@ function buscarProducto() {
         productoElegido = true
         buscador.value = ""
     } else {
-        alert("Producto incorrecto o inexistente")
+        tostada("Producto incorrecto o inexistente", 2000)
         autoquetas(etiquetas, carrito)
         buscador.value = ""
     }
@@ -236,7 +236,11 @@ function buscarPorMaterial() {
         autoquetas(materialBuscado, carrito)
         buscadorMateriales.value = ""
     } else {
-        alert("Materiales disponibles:\n" + listarMaterialesUnicos(etiquetas))
+        Swal.fire({
+            title: 'Material no encontrado',
+            text: 'Materiales disponibles:\n' + listarMaterialesUnicos(etiquetas),
+            icon: 'warning'
+        })
         autoquetas(etiquetas, carrito)
         buscadorMateriales.value = ""
     }
