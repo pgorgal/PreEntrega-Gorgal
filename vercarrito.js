@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function mostrarCarrito(carrito) {
     if (carrito.length === 0) {
-        let tarjetaCarrito = document.createElement("div")  
+        let tarjetaCarrito = document.createElement("div")
         tarjetaCarrito.className = "carrito"
         tarjetaCarrito.innerHTML = `
                 <p class="card-carrito">El carrito está vacío</p>        
@@ -45,11 +45,13 @@ function mostrarCarrito(carrito) {
 
 let botonComprar = document.getElementById("comprar")
 
-botonComprar.addEventListener("click", () => finalizarCompra(carrito))
+botonComprar.addEventListener("click", () => {
+    carrito = finalizarCompra(carrito)
+})
 
 function finalizarCompra(carrito) {
     if (carrito.length === 0) {
-       alerta("Primero debe agregar productos al carrito", 'warning')    
+        alerta("Primero debe agregar productos al carrito", 'warning')
     } else {
         let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
         Swal.fire({
@@ -60,6 +62,7 @@ function finalizarCompra(carrito) {
         carrito = []
         localStorage.clear("carrito")
         mostrarCarrito(carrito)
+        return carrito
     }
 }
 
@@ -71,19 +74,20 @@ botonVaciar.addEventListener("click", () => vaciarCarrito(carrito))
 
 function vaciarCarrito(carrito) {
     if (carrito.length === 0) {
-        alerta("Primero debe agregar productos al carrito", 'warning')  
+        alerta("Primero debe agregar productos al carrito", 'warning')
     } else {
         carrito = []
         localStorage.clear("carrito")
         mostrarCarrito(carrito)
+        return carrito
     }
 }
 
 // Cartel de alerta
 
-function alerta(title, icon){ 
-Swal.fire({
-    title,
-    icon
-})
+function alerta(title, icon) {
+    Swal.fire({
+        title,
+        icon
+    })
 }
