@@ -70,7 +70,9 @@ function finalizarCompra(carrito) {
 
 let botonVaciar = document.getElementById("vaciar")
 
-botonVaciar.addEventListener("click", () => vaciarCarrito(carrito))
+botonVaciar.addEventListener("click", () => {
+    carrito = vaciarCarrito(carrito)
+})
 
 function vaciarCarrito(carrito) {
     if (carrito.length === 0) {
