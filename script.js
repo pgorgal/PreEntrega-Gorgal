@@ -1,18 +1,86 @@
-// Productos
+// Fetch
 
-let etiquetas = [
-    { id: 1, nombre: "Plato chico", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x25", signo: "$", precio: 3000, img: "plato" },
-    { id: 2, nombre: "Plato grande", descripcion: "Plato de asado", material: "Guayubira", medidas: "25x35", signo: "$", precio: 4000, img: "platogrande" },
-    { id: 3, nombre: "Tabla de asado", descripcion: "Tabla de asado", material: "Guayubira", medidas: "35x50", signo: "$", precio: 5000, img: "guayularga" },
-    { id: 4, nombre: "Tabla pizzera", descripcion: "Tabla para pizza", material: "Guayubira", medidas: "37", signo: "$", precio: 5000, img: "pizzera" },
-    { id: 5, nombre: "Plato chico", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x25", signo: "$", precio: 4000, img: "petiribi2" },
-    { id: 6, nombre: "Plato grande", descripcion: "Plato de asado", material: "Petiribi", medidas: "25x35", signo: "$", precio: 5000, img: "petiribi1" },
-]
+fetch("./info.json")
+    .then(respuesta => respuesta.json())
+    .then(etiquetas => principal(etiquetas))
+
+// Principal
+
+function principal(etiquetas) {
+
+    // Autoquetas
+
+    autoquetas(etiquetas, carrito)
+
+    //Botón ordenar de A-Z
+
+    let botonAZ = document.getElementById("az")
+
+    botonAZ.addEventListener("click", () => {
+        etiquetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
+        autoquetas(etiquetas, carrito)
+    })
+
+    //Botón ordenar de Z-A
+
+    let botonZA = document.getElementById("za")
+
+    botonZA.addEventListener("click", () => {
+        etiquetas.sort((a, b) => b.nombre.localeCompare(a.nombre))
+        autoquetas(etiquetas, carrito)
+    })
+
+    //Botón ordenar $<$
+
+    let botonMenor = document.getElementById("menor")
+
+    botonMenor.addEventListener("click", () => {
+        etiquetas.sort((a, b) => a.precio - (b.precio))
+        autoquetas(etiquetas, carrito)
+    })
+
+    //Botón ordenar $>$
+
+    let botonMayor = document.getElementById("mayor")
+
+    botonMayor.addEventListener("click", () => {
+        etiquetas.sort((a, b) => b.precio - (a.precio))
+        autoquetas(etiquetas, carrito)
+    })
+
+    //Buscar productos por nombre
+
+    let buscador = document.getElementById("buscador")
+    let botonBuscar = document.getElementById("buscar")
+
+    buscador.addEventListener("keydown", (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            buscarProducto()
+        }
+    })
+
+    botonBuscar.addEventListener("click", () => buscarProducto())
+
+    // Buscar por Material
+
+    let buscadorMateriales = document.getElementById("buscadorMateriales")
+    let botonBuscarMateriales = document.getElementById("buscarMateriales")
+
+    buscadorMateriales.addEventListener("keydown", (e) => {
+        if (e.keyCode === 13) {
+            e.preventDefault()
+            buscarPorMaterial()
+        }
+    })
+
+    botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial())
+}
 
 let carritoRecuperado = localStorage.getItem("carrito")
 let carrito = carritoRecuperado ? JSON.parse(carritoRecuperado) : []
-itemsCarrito(carrito)
 
+itemsCarrito(carrito)
 
 // Contador carrito
 
@@ -20,10 +88,6 @@ function itemsCarrito(productosCarrito) {
     let contadorCarrito = document.getElementById("contador-carrito")
     contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
 }
-
-// Autoquetas
-
-autoquetas(etiquetas, carrito)
 
 function autoquetas(etiquetas, carrito) {
     let contenedor = document.getElementById("card")
@@ -136,42 +200,6 @@ function obtenerCantidadProducto(carrito, idProducto) {
     return productoEnCarrito ? productoEnCarrito.unidades : 0
 }
 
-//Botón ordenar de A-Z
-
-let botonAZ = document.getElementById("az")
-
-botonAZ.addEventListener("click", () => {
-    etiquetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
-    autoquetas(etiquetas, carrito)
-})
-
-//Botón ordenar de Z-A
-
-let botonZA = document.getElementById("za")
-
-botonZA.addEventListener("click", () => {
-    etiquetas.sort((a, b) => b.nombre.localeCompare(a.nombre))
-    autoquetas(etiquetas, carrito)
-})
-
-//Botón ordenar $<$
-
-let botonMenor = document.getElementById("menor")
-
-botonMenor.addEventListener("click", () => {
-    etiquetas.sort((a, b) => a.precio - (b.precio))
-    autoquetas(etiquetas, carrito)
-})
-
-//Botón ordenar $>$
-
-let botonMayor = document.getElementById("mayor")
-
-botonMayor.addEventListener("click", () => {
-    etiquetas.sort((a, b) => b.precio - (a.precio))
-    autoquetas(etiquetas, carrito)
-})
-
 // Listas de productos
 
 function listar(productos) {
@@ -181,20 +209,6 @@ function listar(productos) {
 function descripcion(productos) {
     return productos.map(producto => producto.id + " - " + producto.nombre + "\n" + producto.descripcion + "\n" + "Material: " + producto.material + "\n" + "Medidas: " + producto.medidas + "cm\n" + "Precio: $" + producto.precio).join("\n")
 }
-
-//Buscar productos por nombre
-
-let buscador = document.getElementById("buscador")
-let botonBuscar = document.getElementById("buscar")
-
-buscador.addEventListener("keydown", (e) => {
-    if (e.keyCode === 13) {
-        e.preventDefault()
-        buscarProducto()
-    }
-})
-
-botonBuscar.addEventListener("click", () => buscarProducto())
 
 function buscarProducto() {
     let productoElegido = false
@@ -213,20 +227,6 @@ function buscarProducto() {
     }
 }
 
-// Buscar por Material
-
-let buscadorMateriales = document.getElementById("buscadorMateriales")
-let botonBuscarMateriales = document.getElementById("buscarMateriales")
-
-buscadorMateriales.addEventListener("keydown", (e) => {
-    if (e.keyCode === 13) {
-        e.preventDefault()
-        buscarPorMaterial()
-    }
-})
-
-botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial())
-
 function buscarPorMaterial() {
     let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase();
 
@@ -238,7 +238,7 @@ function buscarPorMaterial() {
     } else {
         Swal.fire({
             title: 'Material no encontrado',
-            text: 'Materiales disponibles:\n' + listarMaterialesUnicos(etiquetas),
+            text: 'Materiales disponibles: ' + listarMaterialesUnicos(etiquetas),
             icon: 'warning'
         })
         autoquetas(etiquetas, carrito)

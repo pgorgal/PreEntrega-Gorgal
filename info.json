@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "nombre": "Plato chico",
+        "descripcion": "Plato de asado",
+        "material": "Guayubira",
+        "medidas": "25x25",
+        "signo": "$",
+        "precio": 3000,
+        "img": "plato"
+    },
+    {
+        "id": 2,
+        "nombre": "Plato grande",
+        "descripcion": "Plato de asado",
+        "material": "Guayubira",
+        "medidas": "25x35",
+        "signo": "$",
+        "precio": 4000,
+        "img": "platogrande"
+    },
+    {
+        "id": 3,
+        "nombre": "Tabla de asado",
+        "descripcion": "Tabla de asado",
+        "material": "Guayubira",
+        "medidas": "35x50",
+        "signo": "$",
+        "precio": 5000,
+        "img": "guayularga"
+    },
+    {
+        "id": 4,
+        "nombre": "Tabla pizzera",
+        "descripcion": "Tabla para pizza",
+        "material": "Guayubira",
+        "medidas": "37",
+        "signo": "$",
+        "precio": 5000,
+        "img": "pizzera"
+    },
+    {
+        "id": 5,
+        "nombre": "Plato chico",
+        "descripcion": "Plato de asado",
+        "material": "Petiribi",
+        "medidas": "25x25",
+        "signo": "$",
+        "precio": 4000,
+        "img": "petiribi2"
+    },
+    {
+        "id": 6,
+        "nombre": "Plato grande",
+        "descripcion": "Plato de asado",
+        "material": "Petiribi",
+        "medidas": "25x35",
+        "signo": "$",
+        "precio": 5000,
+        "img": "petiribi1"
+    }
+]
