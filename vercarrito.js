@@ -31,9 +31,9 @@ function mostrarCarrito(carrito) {
             alt=${descripcion}>
             <div class="card-body">
                 <h4 class="card-title">${nombre}</h4>
-                <p class="card-carrito">Precio unitario: $${precioUnitario} </p>
+                <p class="card-carrito">Precio unitario: $${new Intl.NumberFormat("de-DE").format(precioUnitario)}</p>
                 <p class="card-carrito">Unidades: ${unidades}</p>
-                <p class="card-carrito">Subtotal: $${subtotal} </p>
+                <p class="card-carrito">Subtotal: $${new Intl.NumberFormat("de-DE").format(subtotal)}</p>
             </div>
         `
             statusCarrito.appendChild(tarjetaCarrito)
@@ -58,7 +58,7 @@ function finalizarCompra(carrito) {
     } else {
         let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
         Swal.fire({
-            title: 'El total a pagar es $' + total,
+            title: 'El total a pagar es $' + Intl.NumberFormat("de-DE").format(total),
             text: 'Gracias por su compra',
             icon: 'success'
         })

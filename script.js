@@ -104,7 +104,7 @@ function autoquetas(etiquetas, carrito) {
             <div class="card-body">
                 <h4 class="card-title">${nombre}</h4>
                 <p class="card-text">Medidas ${medidas}cm</p>
-                <p class="card-prize">$${precio} </p>
+                <p class="card-prize">$${new Intl.NumberFormat("de-DE").format(precio)} </p>
                 <div class="cantidades">
                         <span>
                             <button class="btn btn-default btn-minus tarjbtn" type="button" id="res-${id}">-</button>
