@@ -56,11 +56,11 @@ function principal(etiquetas) {
     buscador.addEventListener("keydown", (e) => {
         if (e.keyCode === 13) {
             e.preventDefault()
-            buscarProducto()
+            buscarProducto(etiquetas, buscador)
         }
     })
 
-    botonBuscar.addEventListener("click", () => buscarProducto())
+    botonBuscar.addEventListener("click", () => buscarProducto(etiquetas, buscador))
 
     // Buscar por Material
 
@@ -70,11 +70,11 @@ function principal(etiquetas) {
     buscadorMateriales.addEventListener("keydown", (e) => {
         if (e.keyCode === 13) {
             e.preventDefault()
-            buscarPorMaterial()
+            buscarPorMaterial(etiquetas, buscadorMateriales)
         }
     })
 
-    botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial())
+    botonBuscarMateriales.addEventListener("click", () => buscarPorMaterial(etiquetas, buscadorMateriales))
 }
 
 let carritoRecuperado = localStorage.getItem("carrito")
@@ -88,6 +88,8 @@ function itemsCarrito(productosCarrito) {
     let contadorCarrito = document.getElementById("contador-carrito")
     contadorCarrito.textContent = productosCarrito.reduce((total, producto) => total + producto.unidades, 0)
 }
+
+// Autoquetas
 
 function autoquetas(etiquetas, carrito) {
     let contenedor = document.getElementById("card")
@@ -210,7 +212,7 @@ function descripcion(productos) {
     return productos.map(producto => producto.id + " - " + producto.nombre + "\n" + producto.descripcion + "\n" + "Material: " + producto.material + "\n" + "Medidas: " + producto.medidas + "cm\n" + "Precio: $" + producto.precio).join("\n")
 }
 
-function buscarProducto() {
+function buscarProducto(etiquetas, buscador) {
     let productoElegido = false
     let textoBusqueda = buscador.value.trim().toLowerCase()
 
@@ -227,7 +229,7 @@ function buscarProducto() {
     }
 }
 
-function buscarPorMaterial() {
+function buscarPorMaterial(etiquetas, buscadorMateriales) {
     let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase();
 
     let materialBuscado = etiquetas.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales));
@@ -245,6 +247,7 @@ function buscarPorMaterial() {
         buscadorMateriales.value = ""
     }
 }
+
 function listarMaterialesUnicos(productos) {
     let materialesUnicos = [...new Set(productos.map(item => item.material))]
     return materialesUnicos.join("\n")
