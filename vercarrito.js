@@ -52,6 +52,9 @@ botonComprar.addEventListener("click", () => {
 function finalizarCompra(carrito) {
     if (carrito.length === 0) {
         alerta("Primero debe agregar productos al carrito", 'warning')
+        setTimeout(function () {
+            window.location.href = 'index.html'
+        }, 3000)
     } else {
         let total = carrito.reduce((acum, producto) => acum + producto.subtotal, 0)
         Swal.fire({
@@ -80,12 +83,18 @@ botonVaciar.addEventListener("click", () => {
 function vaciarCarrito(carrito) {
     if (carrito.length === 0) {
         alerta("Primero debe agregar productos al carrito", 'warning')
+        setTimeout(function () {
+            window.location.href = 'index.html'
+        }, 3000)
     } else {
         carrito = []
         localStorage.clear("carrito")
         mostrarCarrito(carrito)
-        return carrito
+        setTimeout(function () {
+            window.location.href = 'index.html'
+        }, 3000)
     }
+    return carrito
 }
 
 // Cartel de alerta
