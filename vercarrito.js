@@ -62,8 +62,11 @@ function finalizarCompra(carrito) {
         carrito = []
         localStorage.clear("carrito")
         mostrarCarrito(carrito)
-        return carrito
+        setTimeout(function () {
+            window.location.href = 'index.html'
+        }, 3000)
     }
+    return carrito
 }
 
 // Vaciar carrito 
