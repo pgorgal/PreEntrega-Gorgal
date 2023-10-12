@@ -282,7 +282,7 @@ function borrar() {
         let indice = etiquetas.findIndex(etiqueta => etiqueta.nombre === nombre)
 
         if (indice !== -1) {
-            etiquetas.splice(indice, 1);
+            etiquetas.splice(indice, 1)
             console.log(`Etiqueta con nombre "${nombre}" eliminado correctamente.`)
         } else {
             console.log(`No se encontró ninguna etiqueta con nombre "${nombre}".`)
