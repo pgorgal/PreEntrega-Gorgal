@@ -205,7 +205,7 @@ function buscarProducto(etiquetas, buscador) {
     let textoBusqueda = buscador.value.trim().toLowerCase()
 
     let productoBuscado = etiquetas.filter(producto => producto.nombre.toLowerCase().includes(textoBusqueda))
-    
+
     if (productoBuscado.length > 0) {
         autoquetas(productoBuscado, carrito)
         productoElegido = true
@@ -218,10 +218,10 @@ function buscarProducto(etiquetas, buscador) {
 }
 
 function buscarPorMaterial(etiquetas, buscadorMateriales) {
-    let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase();
-    
-    let materialBuscado = etiquetas.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales));
-    
+    let textoBusquedaMateriales = buscadorMateriales.value.trim().toLowerCase()
+
+    let materialBuscado = etiquetas.filter(etiqueta => etiqueta.material.toLowerCase().includes(textoBusquedaMateriales))
+
     if (materialBuscado.length > 0) {
         autoquetas(materialBuscado, carrito)
         buscadorMateriales.value = ""
@@ -244,7 +244,7 @@ function listarMaterialesUnicos(productos) {
 //Función crear etiquetas
 
 function crear() {
-    
+
     function Etiqueta(id, nombre, descripcion, material, medidas, signo, precio, img) {
         this.id = id
         this.nombre = nombre
@@ -256,9 +256,9 @@ function crear() {
         this.valor = this.signo + this.precio
         this.img = img
     }
-    
+
     let cantidad = Number(prompt("Cantidad"))
-    
+
     for (let i = 0; i < cantidad; i++) {
         let id = etiquetas.length + 1
         let nombre = prompt("Ingresar nombre")
@@ -268,7 +268,7 @@ function crear() {
         let signo = "$"
         let precio = prompt("Ingresar precio")
         let img = prompt("Ingresar nombre de imagen")
-        
+
         let etiqueta = new Etiqueta(id, nombre, descripcion, material, medidas, signo, precio, img)
         etiquetas.push(etiqueta)
     }
@@ -277,10 +277,10 @@ function crear() {
 //Función eliminar etiquetas
 
 function borrar() {
-    
+
     function eliminarEtiqueta(nombre) {
-        let indice = etiquetas.findIndex(etiqueta => etiqueta.nombre === nombre);
-        
+        let indice = etiquetas.findIndex(etiqueta => etiqueta.nombre === nombre)
+
         if (indice !== -1) {
             etiquetas.splice(indice, 1);
             console.log(`Etiqueta con nombre "${nombre}" eliminado correctamente.`)
@@ -288,7 +288,7 @@ function borrar() {
             console.log(`No se encontró ninguna etiqueta con nombre "${nombre}".`)
         }
     }
-    
+
     let nombreAEliminar = prompt("Etiqueta a eliminar")
     eliminarEtiqueta(nombreAEliminar)
 }
