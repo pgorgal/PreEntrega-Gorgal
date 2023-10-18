@@ -18,7 +18,7 @@ function principal(etiquetas) {
 
     botonAZ.addEventListener("click", () => {
         etiquetas.sort((a, b) => a.nombre.localeCompare(b.nombre))
-        autoquetas(etiquetas, carrito)
+        autoquetas(etiquetas,   )
     })
 
     //Botón ordenar de Z-A

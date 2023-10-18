@@ -153,6 +153,10 @@ img {
     transform: scale(1.1);
 }
 
+.boton:hover {
+    transform: scale(1.05);
+}
+
 .carrito {
     background-color: #f4c95d;
     display: flex;
